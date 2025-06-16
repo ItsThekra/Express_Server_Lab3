@@ -2,11 +2,13 @@ const express = require('express')
 const app = express()
 const port = 3001
 
-// Get - redirect to /hello-world
+
+// Get - redirect from root to /hello-world
 app.get('/', (req, res) => {
   res.redirect('/hello-world')
 })
-// redirect to /hello-world.json from /hello-world
+
+// redirect to /hello-world from /hello-world.json
 app.get('/hello-world', (req, res) => {
   res.redirect('/hello-world.json');
 });
@@ -27,3 +29,4 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
