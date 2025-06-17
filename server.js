@@ -1,32 +1,21 @@
 const express = require('express');
 const app = express();
 const port = 3001;
+const path = require('path');
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Get - redirect from root to /hello-world
+const animalRoutes = require('./routes/animalRoutes');
+app.use('/animal', animalRoutes); 
+
 app.get('/', (req, res) => {
-  res.redirect('/hello-world');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// redirect to /hello-world from /hello-world.json
-app.get('/hello-world', (req, res) => {
-  res.redirect('/hello-world.json');
-});
-
-app.get('/hello-world.json', (req, res) => {
-  res.json({});
-});
-
-app.get('/hello-world.png', (req, res) => {
-  res.json({});
-});
-
-// Override default error message
 app.use((req, res) => {
-  res.status(404).send(`${req.method} is not supported on ${req.path}`);
+  res.status(404).send(`Cannot ${req.method} ${req.path}`);
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server is running at http://localhost:${port}`);
 });
